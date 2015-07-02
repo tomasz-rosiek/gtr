@@ -1,6 +1,7 @@
 package pl.tzr.gumtree.test;
 
 import org.junit.Test;
+import pl.tzr.gumtree.AddressBookLoadingFailureException;
 import pl.tzr.gumtree.AddressBookReader;
 import pl.tzr.gumtree.Person;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThatThrownBy;
 
 public class AddressBookReaderTest {
 
@@ -49,6 +51,18 @@ public class AddressBookReaderTest {
 
         //then
         assertThat(addressBook).usingFieldByFieldElementComparator().hasSameElementsAs(expectedContent);
+    }
+
+    @Test
+    public void shouldRaiseExceptionIfFileHasInvalidStructure() {
+        assertThatThrownBy(() -> assertThat(reader.load("InvalidAddressBook"))).
+                isInstanceOf(AddressBookLoadingFailureException.class).hasMessageContaining("Failure parsing line");
+    }
+
+    @Test
+    public void shouldRaiseExceptionIfFileNotExists() {
+        assertThatThrownBy(() -> assertThat(reader.load("NonExistentInvalidAddressBook"))).
+                isInstanceOf(AddressBookLoadingFailureException.class).hasMessageContaining("failed");
     }
 
 }

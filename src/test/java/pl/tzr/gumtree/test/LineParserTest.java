@@ -1,13 +1,16 @@
 package pl.tzr.gumtree.test;
 
 import org.junit.Test;
+import pl.tzr.gumtree.AddressBookLoadingFailureException;
 import pl.tzr.gumtree.LineParser;
 import pl.tzr.gumtree.Person;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeParseException;
 
 import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThatThrownBy;
 
 public class LineParserTest {
 
@@ -27,5 +30,25 @@ public class LineParserTest {
     public void shouldParseValidLineForSomeoneBornThisYear() {
         assertThat(LineParser.parseLine("Paul Robinson, Male, 15/01/15")).isEqualToComparingFieldByField(
                 new Person("Paul Robinson", Person.Sex.MALE, LocalDate.of(2015, Month.JANUARY, 15)));
+    }
+
+    @Test
+    public void shouldRaiseAnExceptionIfLineHasInvalidStructure() {
+        assertThatThrownBy(() -> assertThat(LineParser.parseLine("Paul Robinson, Male 15/01/15"))).
+                isInstanceOf(AddressBookLoadingFailureException.class)
+                .hasMessageContaining("Invalid column number");
+    }
+
+    @Test
+    public void shouldRaiseAnExceptionIfInvalidSexProvided() {
+        assertThatThrownBy(() -> assertThat(LineParser.parseLine("Paul Robinson, Alien, 15/01/15"))).
+                isInstanceOf(AddressBookLoadingFailureException.class)
+                .hasMessageContaining("Invalid sex specified");
+    }
+
+    @Test
+    public void shouldRaiseAnExceptionIfInvalidDateProvided() {
+        assertThatThrownBy(() -> assertThat(LineParser.parseLine("Paul Robinson, Male, 99/99/99"))).
+                isInstanceOf(DateTimeParseException.class);
     }
 }
