@@ -82,14 +82,14 @@ public class AddressBookTest {
 
     @Test
     public void addressBookShouldThrowExceptionIfCalculatingAgeDifferenceForMissingPerson1() {
-        assertThatThrownBy(() -> assertThat(addressBook2.calculateAgeDifferenceInDays("Tony Halik", "Wes Jackson"))).
+        assertThatThrownBy(() -> addressBook2.calculateAgeDifferenceInDays("Tony Halik", "Wes Jackson")).
                 isInstanceOf(PersonNotFoundException.class)
                 .hasMessageContaining("Tony Halik");
     }
 
     @Test
     public void addressBookShouldThrowExceptionIfCalculatingAgeDifferenceForMissingPerson2() {
-        assertThatThrownBy(() -> assertThat(addressBook2.calculateAgeDifferenceInDays("Wes Jackson", "Tony Halik"))).
+        assertThatThrownBy(() -> addressBook2.calculateAgeDifferenceInDays("Wes Jackson", "Tony Halik")).
                 isInstanceOf(PersonNotFoundException.class)
                 .hasMessageContaining("Tony Halik");
     }

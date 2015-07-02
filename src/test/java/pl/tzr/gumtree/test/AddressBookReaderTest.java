@@ -55,13 +55,13 @@ public class AddressBookReaderTest {
 
     @Test
     public void shouldRaiseExceptionIfFileHasInvalidStructure() {
-        assertThatThrownBy(() -> assertThat(reader.load("InvalidAddressBook"))).
+        assertThatThrownBy(() -> reader.load("InvalidAddressBook")).
                 isInstanceOf(AddressBookLoadingFailureException.class).hasMessageContaining("Failure parsing line");
     }
 
     @Test
     public void shouldRaiseExceptionIfFileNotExists() {
-        assertThatThrownBy(() -> assertThat(reader.load("NonExistentInvalidAddressBook"))).
+        assertThatThrownBy(() -> reader.load("NonExistentInvalidAddressBook")).
                 isInstanceOf(AddressBookLoadingFailureException.class).hasMessageContaining("failed");
     }
 

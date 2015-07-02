@@ -34,21 +34,21 @@ public class LineParserTest {
 
     @Test
     public void shouldRaiseAnExceptionIfLineHasInvalidStructure() {
-        assertThatThrownBy(() -> assertThat(LineParser.parseLine("Paul Robinson, Male 15/01/15"))).
+        assertThatThrownBy(() -> LineParser.parseLine("Paul Robinson, Male 15/01/15")).
                 isInstanceOf(AddressBookLoadingFailureException.class)
                 .hasMessageContaining("Invalid column number");
     }
 
     @Test
     public void shouldRaiseAnExceptionIfInvalidSexProvided() {
-        assertThatThrownBy(() -> assertThat(LineParser.parseLine("Paul Robinson, Alien, 15/01/15"))).
+        assertThatThrownBy(() -> LineParser.parseLine("Paul Robinson, Alien, 15/01/15")).
                 isInstanceOf(AddressBookLoadingFailureException.class)
                 .hasMessageContaining("Invalid sex specified");
     }
 
     @Test
     public void shouldRaiseAnExceptionIfInvalidDateProvided() {
-        assertThatThrownBy(() -> assertThat(LineParser.parseLine("Paul Robinson, Male, 99/99/99"))).
+        assertThatThrownBy(() -> LineParser.parseLine("Paul Robinson, Male, 99/99/99")).
                 isInstanceOf(DateTimeParseException.class);
     }
 }
