@@ -1,4 +1,6 @@
-In order to run the application you have to perform the following steps:
+In order to run the application you have to run the following commands:
 
-* Execute mvn package command
-* Execute address_book.sh shell script
+```
+mvn package
+sh address_book.sh
+```
