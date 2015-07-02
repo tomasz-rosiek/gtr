@@ -1,5 +1,3 @@
-# Gumtree coding challenge
-
 In order to run the application you have to perform the following steps:
 
 * Execute mvn package command
