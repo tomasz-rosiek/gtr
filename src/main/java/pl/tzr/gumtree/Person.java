@@ -1,10 +1,12 @@
 package pl.tzr.gumtree;
 
+import com.google.common.base.MoreObjects;
+
 import java.time.LocalDate;
 
 public class Person {
 
-    public enum Sex { MALE, FEMALE;}
+    public enum Sex { MALE, FEMALE}
 
     final String name;
 
@@ -25,6 +27,10 @@ public class Person {
 
     public String getName() {
         return name;
+    }
+
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("name", name).add("sex", sex).add("birthDate", birthDate).toString();
     }
 
 }
